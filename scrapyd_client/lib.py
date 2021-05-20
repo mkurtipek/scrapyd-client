@@ -29,7 +29,10 @@ def get_spiders(url, project, pattern='*'):
     """
     response = get_request(url + '/listspiders.json',
                            params={'project': project})
-    return fnmatch.filter(response['spiders'], pattern)
+
+    match = fnmatch.filter(response['spiders'], pattern)
+ 
+    return list(set(response['spiders']) - set(match))
 
 
 def schedule(url, project, spider, args={}):
